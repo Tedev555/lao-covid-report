@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "805718089974",
+    "firebase_url": "https://sanesouk-logistics.firebaseio.com",
+    "project_id": "sanesouk-logistics",
+    "storage_bucket": "sanesouk-logistics.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805718089974:android:54e52ccd816dcf86640cd7",
+        "android_client_info": {
+          "package_name": "me.thanongsine.lao_covid_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805718089974-lstqki3kdvnf1c0eon4ulpco1krbi5l2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVkdCT7-UQf-_S3eiD-aBy2dsPaNDxxJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805718089974-lstqki3kdvnf1c0eon4ulpco1krbi5l2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "805718089974-3a23h9ucoiv1k2onkqf0smbi6opl0p2s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "me.tedory.saensouk"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

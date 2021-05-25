@@ -22,9 +22,9 @@ class _NumberBoardState extends State<NumberBoard> {
     return Column(
       children: [
         _newCasesBox(
-            widget.data['newCases'], _provinceCasesData, scWidth, 150.0),
+            widget.data['newCases'], _provinceCasesData, scWidth, 120.0),
         SizedBox(
-          height: 32,
+          height: 16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,7 +33,7 @@ class _NumberBoardState extends State<NumberBoard> {
                 'ກຳລັງປິນປົວ',
                 '${Utils.formatNumber(widget.data['active'])} ຄົນ',
                 boardWidth,
-                150.0,
+                120.0,
                 Colors.blue,
                 24),
             SizedBox(width: 16),
@@ -41,7 +41,7 @@ class _NumberBoardState extends State<NumberBoard> {
                 'ປິ່ນປົວຫາຍດີ',
                 '${Utils.formatNumber(widget.data['recovered'])} ຄົນ',
                 boardWidth,
-                150.0,
+                120.0,
                 Colors.green,
                 24),
           ],
@@ -54,7 +54,7 @@ class _NumberBoardState extends State<NumberBoard> {
                 'ເສຍຊີວິດ',
                 '${Utils.formatNumber(widget.data['death'])} ຄົນ',
                 boardWidth,
-                150.0,
+                120.0,
                 Colors.pink,
                 24),
             SizedBox(width: 16),
@@ -62,7 +62,7 @@ class _NumberBoardState extends State<NumberBoard> {
                 'ໄດ້ຮັບການກວດ',
                 '${Utils.formatNumber(widget.data['test'])} ຄົນ',
                 boardWidth,
-                150.0,
+                120.0,
                 Colors.blueGrey,
                 24),
           ],
@@ -77,7 +77,7 @@ class _NumberBoardState extends State<NumberBoard> {
       width: width,
       decoration: BoxDecoration(
           color: Colors.white.withOpacity(1),
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         children: [
           Text('ຕິດເຊື້ອໃຫມ່',
@@ -219,7 +219,7 @@ class _NumberBoardState extends State<NumberBoard> {
       height: height,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

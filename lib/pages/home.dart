@@ -45,34 +45,66 @@ class _HomePageState extends State<HomePage> {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
+  void showAppInfo() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('ກ່ຽວກັບແອັບຯ LaoCovidInfo'),
+            content: Container(
+              height: 180,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Developed by:'),
+                  Text('Thanongsine Chanthakham'),
+                  SizedBox(height: 16,),
+                  Text('E-mail: thanong984@gmail.com'),
+                  Text('Phone: +85620-58888-059'),
+                  SizedBox(height: 16,),
+                  Text('Information: ສູນຂ່າວສານການແພດສຸຂະສຶກສາ'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(),
-        body: SafeArea(
-          child: Container(
-            color: Theme.of(context).primaryColor,
-            child: FutureBuilder<Map<String, dynamic>>(
-                future: _webApi.getCovidCasesData(),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          Text('ກຳລັງໂຫລດຂໍ້ມູນ')
-                        ],
-                      ));
-                    default:
-                      if (snapshot.hasError)
-                        return Text('Error: ${snapshot.error}');
-                      else
-                        return _buildBody(snapshot.data);
-                  }
-                }),
-          ),
+        appBar: MyAppBar(showInfo: showAppInfo),
+        body: Container(
+          color: Theme.of(context).primaryColor,
+          child: FutureBuilder<Map<String, dynamic>>(
+              future: _webApi.getCovidCasesData(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 8),
+                        Text('ກຳລັງໂຫລດຂໍ້ມູນ',
+                            style: TextStyle(color: Colors.white))
+                      ],
+                    ));
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else
+                      return _buildBody(snapshot.data);
+                }
+              }),
         ));
   }
 
@@ -120,9 +152,51 @@ class _HomePageState extends State<HomePage> {
         ),
         Container(
             padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            child: NumberBoard(data: data))
+            child: NumberBoard(data: data)),
+        SizedBox(
+          height: 16,
+        ),
+        Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              children: [
+                Text('ຂ່າວສານ',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              ],
+            )),
+        Container(
+            margin: EdgeInsets.only(right: 16, left: 16),
+            child: Column(
+              children: [_listNews(data['newsList']), SizedBox(height: 16)],
+            ))
       ],
     );
+  }
+
+  Widget _listNews(newsList) {
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: newsList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              onTap: () {
+                _launchURL(newsList[index]['link']);
+              },
+              tileColor: Colors.white,
+              leading:
+                  Icon(Icons.mail_outline, color: Colors.black87, size: 30),
+              title: Text(newsList[index]['title'],
+                  style: TextStyle(color: Colors.black87, fontSize: 16)),
+              // trailing: Icon(Icons.keyboard_arrow_right, color: Colors.black87),
+            ),
+          );
+        });
   }
 
   Widget _buildMenuTap(Map item) {

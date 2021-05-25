@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(left: 16, right: 24),
             child: Column(
               children: [
-                Text('ສະຖິຕິການຕິດເຊື້ອ',
+                Text('ສູນລວມຂໍ້ມູນ',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
               ],
             )),

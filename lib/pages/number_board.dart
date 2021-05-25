@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lao_covid_tracker/utils.dart';
 
 class NumberBoard extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -16,8 +17,7 @@ class _NumberBoardState extends State<NumberBoard> {
   Widget build(BuildContext context) {
     final scWidth = MediaQuery.of(context).size.width;
     final boardWidth = (scWidth - 48) / 2;
-    final _provinceCasesData =
-        widget.data['provinces'];
+    final _provinceCasesData = widget.data['provinces'];
 
     return Column(
       children: [
@@ -30,33 +30,53 @@ class _NumberBoardState extends State<NumberBoard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _numberBox(
-                'ກຳລັງປິນປົວ', '961 ຄົນ', boardWidth, 150.0, Colors.blue, 24),
+                'ກຳລັງປິນປົວ',
+                '${Utils.formatNumber(widget.data['active'])} ຄົນ',
+                boardWidth,
+                150.0,
+                Colors.blue,
+                24),
             SizedBox(width: 16),
             _numberBox(
-                'ປິ່ນປົວຫາຍດີ', '800 ຄົນ', boardWidth, 150.0, Colors.green, 24),
+                'ປິ່ນປົວຫາຍດີ',
+                '${Utils.formatNumber(widget.data['recovered'])} ຄົນ',
+                boardWidth,
+                150.0,
+                Colors.green,
+                24),
           ],
         ),
         SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _numberBox('ເສຍຊີວິດ', '2 ຄົນ', boardWidth, 150.0, Colors.pink, 24),
+            _numberBox(
+                'ເສຍຊີວິດ',
+                '${Utils.formatNumber(widget.data['death'])} ຄົນ',
+                boardWidth,
+                150.0,
+                Colors.pink,
+                24),
             SizedBox(width: 16),
-            _numberBox('ໄດ້ຮັບການກວດ', '230,610 ຄົນ', boardWidth, 150.0,
-                Colors.blueGrey, 24),
+            _numberBox(
+                'ໄດ້ຮັບການກວດ',
+                '${Utils.formatNumber(widget.data['test'])} ຄົນ',
+                boardWidth,
+                150.0,
+                Colors.blueGrey,
+                24),
           ],
         ),
       ],
     );
   }
 
-  Widget _newCasesBox(
-      int newCases, provinceCases, width, height) {
+  Widget _newCasesBox(int newCases, provinceCases, width, height) {
     return Container(
       padding: EdgeInsets.all(8),
       width: width,
       decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.2),
+          color: Colors.white.withOpacity(1),
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Column(
         children: [
@@ -65,7 +85,7 @@ class _NumberBoardState extends State<NumberBoard> {
           SizedBox(
             height: 8,
           ),
-          Text('+ $newCases ຄົນ',
+          Text('+ ${Utils.formatNumber(newCases)} ຄົນ',
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 30,
@@ -89,6 +109,9 @@ class _NumberBoardState extends State<NumberBoard> {
   }
 
   Widget _provinceList(provinceCases) {
+    // List<int> provinceCases = provinceCases.map((e) {
+    //   return e;
+    // });
     return ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -100,8 +123,9 @@ class _NumberBoardState extends State<NumberBoard> {
 
   Widget _provinceItem(Map<String, dynamic> itemData, index) {
     if (index == 0) {
-      return Padding(
+      return Container(
         padding: const EdgeInsets.only(left: 8, right: 8),
+        margin: EdgeInsets.only(bottom: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -143,8 +167,7 @@ class _NumberBoardState extends State<NumberBoard> {
     }
 
     return Container(
-        padding: EdgeInsets.all(8),
-        margin: EdgeInsets.all(4),
+        padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
         decoration: BoxDecoration(
             // color: Colors.white.withOpacity(0.2),
             color: Colors.white,
@@ -153,17 +176,36 @@ class _NumberBoardState extends State<NumberBoard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(width: 100, child: Text('${itemData['name']}')),
               Container(
-                  alignment: Alignment.center,
-                  width: 100,
-                  child: Text('${itemData['totalCases']}')),
-              Container(
-                  alignment: Alignment.center,
                   width: 100,
                   child: Text(
-                    '${itemData['newCases']}',
-                    style: TextStyle(color: Colors.red),
+                    '${itemData['name']}',
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                  )),
+              Container(
+                  alignment: Alignment.center,
+                  width: 100,
+                  child: Text('${itemData['totalCases']}',
+                      style: TextStyle(fontSize: 15, color: Colors.black87))),
+              Container(
+                  alignment: Alignment.center,
+                  width: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      itemData['newCases'] > 0
+                          ? Text(
+                              '+${itemData['newCases']}',
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : Text(
+                              '0',
+                              style: TextStyle(fontSize: 15, color: Colors.black87),
+                            ),
+                    ],
                   )),
             ],
           ),
@@ -176,7 +218,7 @@ class _NumberBoardState extends State<NumberBoard> {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
+          color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

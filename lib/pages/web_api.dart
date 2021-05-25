@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 class WebApi {
   final URL =
       'https://covid-data-service-gtudpqxjma-as.a.run.app/api/v1/covid-19/laos/cases';
+  // final URL = 'http://192.168.120.121:8989/api/v1/covid-19/laos/cases';
 
   Future<Map<String, dynamic>> getCovidCasesData() async {
     final response = await http.get(
